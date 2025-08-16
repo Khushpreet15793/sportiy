@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">\
+  <link rel="stylesheet" href="/css/Navbar.css">
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+    <title>Document</title>
+  <script>
+    $(document).ready(function () {
+      // Check if user is logged in
+      if (localStorage.getItem("activeUser") == null) {
+        location.href = "index.html";
+        return;
+      } else {
+        $("#activeUser").html(localStorage.getItem("activeUser"));
+        $("#txtMail").val(localStorage.getItem("activeUser")).attr("readonly", true);
+         // Show welcome text
+       $("#welcomeText").html(
+          "WELCOME " + localStorage.getItem("activeUser")+" to Organiser's Dashboard"+" !!" 
+        );
+      }
+
+      function validateFields() {
+        const oldPwd = $('#oldpwd').val().trim();
+        const newPwd = $('#newpwd').val().trim();
+        $('#savepwd').prop('disabled', !(oldPwd && newPwd));
+      }
+
+      // Attach input validation
+      $('#oldpwd, #newpwd').on('input', validateFields);
+
+      // Save password click
+      $("#savepwd").click(function () {
+        let email2 = $("#txtMail").val();
+        let old = $("#oldpwd").val();
+        let newpwd2 = $("#newpwd").val();
+
+        $.ajax({
+          type: "get",
+          url: "/change-pwd",
+          data: {
+            email: email2,
+            pwd: old,
+            newpwd: newpwd2
+          }
+        }).done(function (response) {
+          alert(response);
+          $("#oldpwd").val('');
+          $("#newpwd").val('');
+        }).fail(function () {
+          alert("Server Error");
+        });
+      });
+
+      // Logout for both buttons
+      $("#btnlogout,#btnlogout2").click(function () {
+        localStorage.removeItem("activeUser");
+        location.href = "index.html";
+      });
+    });
+  </script>
+
+  <style>
+    .card {
+      margin-bottom: 30px;
+      background-size: contain;
+      box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+    }
+     /* Enhanced Welcome Text Section */
+    .welcome-banner {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+        
+    }
+
+    .welcome-banner::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        border-radius: 50%;
+        z-index: 0;
+        animation: float 6s ease-in-out infinite;
+        margin-bottom: 30px;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(180deg); }
+    }
+
+    .welcome-banner {
+        font-size: 1.5rem;
+        font-weight: 500;
+        width:700px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+        animation: slideInDown 0.8s ease-out;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+  </style>
+</head>
+
+<body style="padding-top:20px;">
+  <div class="row">
+      <div class="col-md-12">
+        <nav class="navbar navbar-expand-lg modern-navbar fixed-top">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+              <img src="uploads/logo.jpg" width="100" height="40" style="border-radius:20px; margin-left:10px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html"><b>HOME</b></a>
+                </li>
+              </ul>
+              <form class="d-flex" role="search">
+                <button type="button" class="btn btn-modern" id="btnlogout2" data-bs-toggle="modal" data-bs-target="#">
+                  <b>Log-Out</b>
+                </button>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>>
+
+    <div class="container" style=" margin-left:150px;">
+
+      <div id="welcomeText" class="welcome-banner"></div>
+
+      <div class="row">
+        <div class="card" style="width: 16rem; margin-right: 25px;">
+          <img src="uploads/profileicon.png" class="card-img-top" style="margin-top:10px;" alt="...">
+          <div class="card-body">
+            <center><a href="profileOrganiser.html" class="btn btn-secondary"
+                style="margin-top:40px;"><b>Profile</b></a></center>
+          </div>
+        </div>
+
+        <div class="card" style="width: 16rem; margin-right: 25px;">
+          <img src="uploads/tournament.jpg" class="card-img-top" style="margin-top:10px" alt="...">
+          <div class="card-body">
+            <center><a href="tournament.html" class="btn btn-secondary"
+                style="margin-top:110px;"><b>Post-Tournaments</b></a></center>
+          </div>
+        </div>
+
+        <div class="card" style="width: 16rem; margin-right: 25px;">
+          <img src="uploads/settingicon.jpg" class="card-img-top" style="margin-top:10px;" alt="...">
+          <div class="card-body">
+            <center>
+              <a href="#" class="btn btn-secondary" style="margin-top:40px;" data-bs-toggle="modal"
+                data-bs-target="#settingModal"><b>Setting</b></a>
+            </center>
+          </div>
+        </div>
+
+        <div class="card" style="width: 16rem; margin-right: 25px;">
+          <img src="uploads/logouticon..jpg" class="card-img-top" style="margin-top:10px;" alt="...">
+          <div class="card-body">
+            <center>
+              <a href="#" class="btn btn-secondary" id="btnlogout" style="margin-top:40px;"><b>Log-Out</b></a>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <!-- Settings Modal -->
+          <div class="modal fade" id="settingModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+            
+                <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="txtMail" class="form-label">Email</label>
+                      <input type="email" class="form-control" id="txtMail" placeholder="abc@gmail.com" name="txtMail">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="oldpwd" class="form-label">Enter Current Password</label>
+                      <input type="password" class="form-control" id="oldpwd" placeholder="**" name="oldpwd">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="newpwd" class="form-label">Enter New Password</label>
+                      <input type="password" class="form-control" id="newpwd" placeholder="**" name="newpwd">
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary" id="savepwd" disabled>Save</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

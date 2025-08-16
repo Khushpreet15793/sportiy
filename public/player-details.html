@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/css/Navbar.css">
+    <script>
+        function preview() {
+            prev.src = URL.createObjectURL(event.target.files[0]);
+        }   
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Check if user is logged in
+            if (localStorage.getItem("activeUser") == null) {
+                location.href = "index.html";
+                return;
+            } else {
+                $("#activeUser").html(localStorage.getItem("activeUser"));
+                $("#txtMail").val(localStorage.getItem("activeUser")).attr("readonly", true);
+            }
+            // Logout for both buttons
+            $("#btnlogout,#btnlogout2").click(function () {
+                localStorage.removeItem("activeUser");
+                location.href = "index.html";
+            });
+        });
+    </script>
+
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+        }
+
+        input[type="text"],
+        input[type="button"],
+        input[type="email"] {
+            border: 1px rgb(154, 150, 150) solid;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-expand-lg modern-navbar fixed-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="uploads/logo.jpg" width="100" height="40"
+                            style="border-radius:20px; margin-left:10px;">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html"><b>HOME</b></a>
+                            </li>
+                        </ul>
+                        <form class="d-flex" role="search">
+                            <button type="button" class="btn btn-modern" id="btnlogout2" data-bs-toggle="modal"
+                                data-bs-target="#">
+                                <b>Log-Out</b>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row"
+            style=" font-weight:300; color:rgb(113, 43, 43); font-size:35px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            <center><b>Player-Details</b></center>
+        </div>
+        <form class="row" method="post" enctype="multipart/form-data" style="margin-left:40px; margin-right:40px;">
+            <div class="row">
+                <div class="col-8">
+                    <label for="inputEmail4" style="color:rgb(113, 43, 43);" class="form-label"><b>Email
+                            id</b></label>
+                    <input type="email" class="form-control" id="txtemail" name="txtemail" placeholder="Enter Email">
+                </div>
+            </div><br><br><br>
+            <div class="row">
+                <div class="col-4">
+                    <label for="inputAddress" style="color:rgb(113, 43, 43);" class="form-label"><b>Name</b></label>
+                    <input type="text" class="form-control" id="pname" name="pname" placeholder="Enter Name">
+                </div>
+
+                <div class="col-4">
+                    <label for="inputAddress" style="color:rgb(113, 43, 43);" class="form-label"><b>Games</b></label>
+                    <input type="text" class="form-control" id="game" name="game" placeholder="Enter your Game">
+                </div>
+                <div class="col-4">
+                    <label for="inputAddress" style="color:rgb(113, 43, 43);" class="form-label"><b>Mobile
+                            No.</b></label>
+                    <input type="text" class="form-control" id="mobile" name="mobile"
+                        placeholder="Enter your Mobile No.">
+                </div>
+            </div><br><br><br>
+            <div class="row">
+                <div class="col-6">
+                    <label for="inputAddress2" style="color:rgb(113, 43, 43);" class="form-label"><b>DOB</b></label>
+                    <input type="date" class="form-control" id="dob" name="dob">
+                </div>
+                <div class="col-6">
+                    <label for="inputAddress2" style="color:rgb(113, 43, 43);" class="form-label"><b>Gender</b></label>
+                    <input type="text" class="form-control" id="gender" name="gender" placeholder="Type your's gender">
+                </div>
+
+            </div><br><br><br><br>
+            <div class="row">
+                <div class="col-6">
+                    <label for="inputAddress2" style="color:rgb(113, 43, 43);" class="form-label"><b>Address</b></label>
+                    <input type="text" class="form-control" id="address" name="address"
+                        placeholder="Type your's Address">
+                </div>
+                <div class="col-6">
+                    <label for="inputAddress2" style="color:rgb(113, 43, 43);" class="form-label"><b>City</b></label>
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Type your's City">
+                </div>
+            </div>
+
+    </div>
+    <div class="row mb-4" style="margin-left: 110px; margin-top: 30px;">
+        <div class="col-md-6">
+            <label for="idproof" class="form-label" style="color:rgb(113, 43, 43);"><b>ID Proof</b></label>
+            <select id="idproof" style="width: 500px;" name="idproof" class="form-select">
+                <option value="">Select</option>
+                <option>Aadhar-ID</option>
+                <option>Registration certificate</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="otherinfo" class="form-label" style="color:rgb(113, 43, 43);"><b>Other Info / Past
+                    Achievements</b></label>
+            <textarea class="form-control" style="width:415px;" name="otherinfo" id="otherinfo" rows="2"></textarea>
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-12">
+            <center>
+                <button type="submit" class="btn btn-light" style="width:300px" formaction="/sendplayer"><b>Send to
+                        Server</b></button>
+                <button type="submit" class="btn btn-light" style="width:100px"
+                    formaction="/modifyplayer"><b>Modify</b></button>
+            </center>
+        </div>
+    </div>
+    </form>
+    </div>
+    <br><br>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        var module=angular.module("kuchmodule",[]);
+        var controller=module.controller("kuchcontroller",function($scope,$http){
+
+            $scope.fn=function()
+            {
+                alert();
+            }
+        });
+     </script>   
+</head>
+<body ng-app="kuchmodule" ng-controller="kuchcontroller">
+    <!-- <input type="button" value="click" ng-click="fn();"> -->
+
+  
+    <center>
+        <p>POSTED TOURNAMENTS</p>
+        <hr>
+      </center>
+
+         <center>
+        <div class="container row lg-3">
+          
+            <div class="col-md-5 p-10">
+                <button type="submit" class="btn btn-primary" ng-click="showgame();">Game</button>
+                
+              </div>
+      
+              <div class="col-md-5">
+                  <button type="submit"  class="btn btn-primary" ng-click="showcity();">Update</button>
+                </div>
+
+
+                <b>Cities : </b>
+                <select ng-model="selcity" >
+                  <option value="none">Select</option>
+                  <option ng-repeat="boxObj2 in jsonArraycity" value="{{boxObj2.city}}">{{boxObj.city}}</option>
+                </select>
+                <b>Game : </b>
+                <select ng-model="selgame" >
+                  <option value="none">Select</option>
+                  <option ng-repeat="boxObj3 in jsonArraygame" value="{{boxObj3.game}}">{{boxObj.game}}</option>
+                </select>
+             
+ 
+        <center>
+          <div class="row mt-4">
+            <div class="col">
+              <center> <input type="button" class="btn btn-outline-primary" value="Fetch All Tournaments" ng-click="fn();"></center>
+            </div>
+          </div>
+        </center>
+          <div class="row mt-4">
+            <div class="col-md-3" ng-repeat="boxObj  in jsonArray">
+              <div class="card" style="border: 1px black solid;" ;>
+                <center> <img src="{{boxObj.poster}}" width="250" height="200" alt="..."></center>
+                <div class="card-body">
+                  <center>
+                    <h5 class="card-title">{{boxObj.title}}</h5>
+                    <h5 class="card-title">{{boxObj.city}}</h5>
+                    <h5 class="card-title">{{boxObj.date.slice(0,10)}}</h5>
+                    <h5 class="card-title">{{boxObj.fee}}</h5>
+    
+                    <a href="#" class="btn btn-primary">Get More Details</a>
+                  </center>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    
+
+</body>
+</html>
